@@ -62,15 +62,12 @@ export default {
     priorityDisplayName() {
       switch (this.event.priority) {
         case 1:
-          console.log('Mache ich nicht tief')
           return "Tief";
 
         case 0:
-        console.log('Mache ich nicht mittel')
           return "Mittel";
 
         case -1:
-        console.log('Mache ich nicht hcoch')
           return "Hoch";
       }
       return "Unbekannt weil falsches Return";

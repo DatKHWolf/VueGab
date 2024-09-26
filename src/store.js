@@ -9,6 +9,17 @@ const getters = {
 };
 
 const mutations = {
+  addEvent(eventObj){ 
+
+    const activeDay = getters.activeDay();
+    activeDay.events.push({
+      title:eventObj.title,
+      edit:false,
+      color:eventObj.color,
+      priority:Number(eventObj.priority),
+    });
+  
+  },
   deleteEvent(dayId, eventTitle) {
     const dayObj = state.calendarWeekData.find((day) => day.id === dayId);
     const eventIndex = dayObj.events.find(
@@ -36,6 +47,11 @@ const mutations = {
     eventObj.priority = Number(newEvent.priority);
     eventObj.edit = false;
   },
+  setActiveDay(dayId){
+    state.calendarWeekData.map((dayObj) => {
+      dayObj.id === dayId ? (dayObj.active = true) : (dayObj.active = false)
+    });
+  }
 };
 
 export default {

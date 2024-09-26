@@ -5,6 +5,7 @@
         class="card-header text-center"
         role="button"
         :class="cardHeaderClasses"
+        @click="setActiveDay()"
       >
         <strong>{{ day.fullName }}</strong>
       </div>
@@ -63,6 +64,11 @@ export default {
         : null;
     },
   },
+  methods:{
+    setActiveDay(){
+      Store.mutations.setActiveDay(this.day.id)
+    }
+  }
 };
 </script>
 
