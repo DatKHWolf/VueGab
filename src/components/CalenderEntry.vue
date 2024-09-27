@@ -8,7 +8,7 @@
       </div>
       <div class="card-body">
         <div class="alert alert-danger" v-if="error">der Titel darf nicht leer sein</div>
-        <input type="text" class="form-control" placeholder="Neuer Eintrag" v-model="event.title" />
+        <input type="text" class="form-control" placeholder="Neuer Eintrag" v-model="event.title" @keyup.enter="addEvent()" />
         <select class="form-select mt-2" v-model="event.priority">
           <option value="-1">Hoch</option>
           <option value="0">Mittel</option>
@@ -28,7 +28,7 @@
         <hr />
         <div class="d-grid gap-2">
           <button class="btn btn-primary" @click="addEvent()" :disabled="submitButtonEventStatus">Eintragen</button>
-          <button class="btn btn-danger">Inhalt löschen</button>
+          <button class="btn btn-danger" @click="removeEvent()">Inhalt löschen</button>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@ export default {
       return Store.getters.activeDay().fullName;
     },
     submitButtonEventStatus(){
-      return this.event.title === ""
+      return this.event.title === "";
     }
   },
   methods: {
@@ -66,6 +66,13 @@ export default {
           ? "border border-" + this.event.color
           : "",
       ];
+    },
+    removeEvent(){
+      this.event =     {
+        title: "",
+        color: "primary",
+        priority: 0,
+      }
     },
     setEventColor(eventColor) {
       this.event.color = eventColor;
