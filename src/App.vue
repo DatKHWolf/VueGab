@@ -3,25 +3,32 @@
     <div class="row">
       <div class="col-12">
         <!-- Anfang: Template für die Calendar-Week-Component -->
-         <CalenderWeek />
+        <CalenderWeekAsList />
+        <CalenderWeek />
         <!-- Ende: Template für die Calendar-Week-Component -->
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-4 offset-4">
         <!-- Anfang: Template für die Calendar-Entry-Component -->
-         <CalenderEntry />
-       <!-- Ende: Template für die Calendar-Day-Component -->
+        <CalenderEntry />
+        <!-- Ende: Template für die Calendar-Day-Component -->
       </div>
       <div class="col-2 offset-2">
         <div class="float-end">
           <!-- Mit dem Button blenden wir die Calendar-Settings-Component ein bzw. aus. -->
-          <button class="btn btn-lg mb-2">
+          <button
+            class="btn btn-lg mb-2"
+            :class="buttonSettingsClasses"
+            @click="toggleDisplaySettings()"
+          >
             <i class="fas fa-cogs"></i>
           </button>
         </div>
         <!-- Anfang: Template für die Calendar-Settings-Component -->
-        <CalenderSettings />
+        <!-- v-show ändert einen css-style von none zu "show" -->
+
+        <CalenderSettings v-if="displaySettings" />
         <!-- Ende: Template für die Calendar-Day-Component -->
       </div>
     </div>
@@ -29,18 +36,40 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from "vue";
 import CalenderWeek from "./components/CalenderWeek.vue";
+import CalenderWeekAsList from "./components/CalenderWeekAsList.vue";
 import CalenderEntry from "./components/CalenderEntry.vue";
-import CalenderSettings from "./components/CalenderSettings.vue";
+// import CalenderSettings from "./components/CalenderSettings.vue";
 export default {
   name: "App",
-  components:{
+  data() {
+    return {
+      displaySettings: false,
+    };
+  },
+  methods: {
+    toggleDisplaySettings() {
+      this.displaySettings = !this.displaySettings;
+    },
+  },
+  components: {
     //Langschreibweise
     //'CalenderWeek':CalenderWeek
     //Kurzschreibweise
     CalenderWeek,
+    CalenderWeekAsList,
     CalenderEntry,
-    CalenderSettings,
+    CalenderSettings: defineAsyncComponent(() => {
+      return import(
+        /*webpackChunkName: 'CalenderSettingsComponent' */ "./components/CalenderSettings.vue"
+      );
+    }),
+  },
+  computed: {
+    buttonSettingsClasses() {
+      return this.displaySettings ? ["btn-success"] : ["btn-outline-success"];
+    },
   },
 };
 </script>

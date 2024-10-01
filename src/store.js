@@ -51,7 +51,6 @@ const mutations = {
     });
   },
 };
-
 export default {
   state: readonly(state),
   getters,
