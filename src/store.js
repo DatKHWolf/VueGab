@@ -1,8 +1,10 @@
 import { calendarWeekData } from "./seed";
 import { reactive, readonly } from "vue";
+import { pcListe } from "./pc";
 
 const state = reactive({
   calendarWeekData,
+  pcListe,
   activeView: "CalendarWeek",
 });
 
@@ -28,6 +30,27 @@ const mutations = {
       color: eventDO.color,
       priority: Number(eventDO.priority),
     });
+  },
+  storePc(pc){
+    const Pc =     {
+      id:pc.id,
+      hersteller:pc.hersteller,
+      geraetenummer:pc.geraetenummer,
+      prozessor:pc.prozessor,
+      betriebssystem:pc.betriebssystem,
+      ram :pc.ram,
+      festplatte:{typ:pc.festplatte.typ, size:pc.festplatte.size},
+      benchmark:pc.benchmark,
+      funktion:pc.funktion,
+      benutzername:pc.benutzername,
+      passwort:pc.passwort,
+      aufLager:false,
+      bermerkungen:"",
+      //Datefunktion bauen
+      endkontrolle:"16.02.2024", 
+    }
+    console.log(Pc)
+    //speichern in der "Datenbank"
   },
   editEvent(dayId, eventTitle) {
     // Alle edit-Attribute auf false setzen, damit immer nur ein Event bearbeitet werden kann
